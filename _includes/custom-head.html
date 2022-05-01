@@ -1,0 +1,23 @@
+{% comment %}
+  Placeholder to allow defining custom head, in principle, you can add anything here, e.g. favicons:
+
+  1. Head over to https://realfavicongenerator.net/ to add your own favicons.
+  2. Customize default _includes/custom-head.html in your source directory and insert the given code snippet.
+{% endcomment %}
+
+<!--InstantSearch.js >> https://community.algolia.com/instantsearch.js/v2/getting-started.html-->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.10.4/dist/instantsearch-theme-algolia.min.css">
+
+<title>
+  {% if page.tag or page.title %}
+    {% if page.tag %}
+      {{ page.tag | escape }}
+    {% else %}
+      {{ page.title | escape }}
+    {% endif %}
+  {% endif %}
+</title>
+
+<!--Font-->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">

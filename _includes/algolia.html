@@ -1,0 +1,144 @@
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+
+<script>
+const search = instantsearch({
+  appId: '{{ site.algolia.application_id }}',
+  apiKey: '{{ site.algolia.search_only_api_key }}',
+  indexName: '{{ site.algolia.index_name }}'
+});
+
+const hitTemplate = function(hit) {
+  let date = '';
+  if (hit.date) {
+    date = moment.unix(hit.date).format('YYYY MM DD');
+  }
+
+  let url = `{{ site.baseurl }}${hit.url}#${hit.anchor}`;
+
+  const title = hit._highlightResult.title.value;
+
+  let breadcrumbs = '';
+  if (hit._highlightResult.headings) {
+    breadcrumbs = hit._highlightResult.headings.map(match => {
+      return `<span class="post-breadcrumb">${match.value}</span>`
+    }).join(' > ')
+  }
+
+  const content = hit._highlightResult.html.value;
+
+  return `
+    <div class="post-item">
+      <span class="post-meta">${date}</span>
+      <h2><a class="post-link" href="${url}">${title}</a></h2>
+      {{#breadcrumbs}}<a href="${url}" class="post-breadcrumbs">${breadcrumbs}</a>{{/breadcrumbs}}
+      <div class="post-snippet">${content}</div>
+    </div>
+  `;
+}
+
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#search-searchbar',
+    placeholder: '무엇이든 물어보세요',
+    poweredBy: true // This is required if you're on the free Community plan
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#search-hits',
+    templates: {
+      item: hitTemplate
+    }
+  })
+);
+
+search.start();
+</script>
+
+<style media="screen">
+  .ais-search-box {
+    max-width: 100%;
+    height: auto;
+
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    background: #fdfdfd;
+
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 90px;
+    padding-left: 0px;
+  }
+  .ais-search-box--input {
+    border-radius: 0px;
+    border: solid #000;
+      border-top-width: 0px;
+      border-right-width: 0px;
+      border-bottom-width: 1px;
+      border-left-width: 0px;
+
+    height: auto;
+    padding: 0px 1.5em 0px;
+
+    font-size: 3em;
+    font-weight: 100;
+
+    background: #fdfdfd;
+  }
+
+  .ais-search-box--magnifier {
+    fill: #111;
+    top: calc(50% - 70px);
+  }
+
+    .ais-search-box--magnifier svg {
+    width: 2.4em;
+    height: 2.4em;
+  }
+
+  .ais-search-box--reset{
+    fill: #111;
+    right: 2em;
+    top: calc(50% - 60px);
+  }
+
+  .ais-search-box--reset svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+  }
+
+  .post-item {
+    margin-bottom: 30px;
+  }
+  .post-link .ais-Highlight {
+    color: #111;
+    font-style: normal;
+    text-decoration: underline;
+  }
+  .post-breadcrumbs {
+    color: #424242;
+    display: block;
+  }
+  .post-breadcrumb {
+    font-size: 18px;
+    color: #424242;
+  }
+  .post-breadcrumb .ais-Highlight {
+    font-weight: bold;
+    font-style: normal;
+  }
+  .post-snippet .ais-Highlight {
+    color: #2a7ae2;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .post-snippet img {
+    display: none;
+  }
+</style>
