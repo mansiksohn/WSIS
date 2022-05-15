@@ -43,9 +43,9 @@ theme: minima
 
 # Search settings
 algolia:
-  application_id: HRT88OWLXS
-  index_name: mzux
-  search_only_api_key: 840ca575efe8e2bf9a66753a08c68aa4
+  application_id: FP5NN09YK7
+  index_name: WSIS
+  search_only_api_key: c33e8177198deb7bdf14a35a84d8593b
     # Exclude more files from indexing
   files_to_exclude:
     - about.md
@@ -53,3 +53,4 @@ algolia:
 plugins:
  - jekyll-feed
  - jekyll-seo-tag
+ - jekyll-algolia

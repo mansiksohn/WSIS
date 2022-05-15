@@ -16,9 +16,13 @@ layout: default
 
         <h2>
           <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
+            {{ post.persona | escape }}
           </a>
         </h2>
+        <h4>
+          <p> User > {{ post.saywhat | escape }} </p>
+          <p> {{ post.persona | escape }} >  {{ post.response | escape }} </p>
+        </h4>
 
         <div class="post-snippet">{{ post.excerpt }}</div>
       </div>
