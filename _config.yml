@@ -3,7 +3,7 @@ author:
   name: MZ UX team
   email:
 description: > # this means to ignore newlines until "show_excerpts:"
-  한국어 VUX 응답 패턴을 모으고 있습니다.
+  VUX 응답 패턴을 모으고 있습니다.
 
 show_excerpts: false # set to true to show excerpts on the homepage
 
